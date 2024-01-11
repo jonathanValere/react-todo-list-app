@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
-
 import {
   faEnvelope,
   faKey,
   faListAlt,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faEnvelope, faKey, faListAlt);
-
 import "./App.css";
+import Task from "./components/Task";
 
 function App() {
   // STATES ----------------------------------------
@@ -20,6 +19,7 @@ function App() {
   const handleAddTask = () => {
     // Création d'une copie de la liste
     const newList = [...list];
+    // Le champs est rempli, on insère la tâche dans la liste
     if (task) {
       // Insertion de la tâche dans la nouvelle liste
       newList.push({ id: list.length + 1, nameTask: task, done: false });
@@ -40,8 +40,14 @@ function App() {
         task.done = !task.done;
       }
     });
-    // Mettre à jour le state (list) avec la copie
-    return setList(newList);
+    // ! Les tâches barrées devront être affichées en bas de la liste ---
+    // Séparation en 2 tableaux. Un pour les tâches réalisées et l'autre pour les tâches à faire
+    const listDone = newList.filter((task) => task.done === true);
+    const listToDo = newList.filter((task) => task.done === false);
+    // Fusionner les tableaux en mettant insérant les tâches réalisées à la fin de la liste
+    const newListUpdated = [...listToDo, ...listDone];
+    // Mettre à jour le state (list) avec la copie ----
+    return setList(newListUpdated);
   };
 
   // Supprimer la tâche-------
@@ -59,25 +65,21 @@ function App() {
   // Render ----------------------------------------
   return (
     <main>
-      {/* Afficher un texte si la liste est vide */}
-      {list.length > 0 ? <p>Tâches à effectuer</p> : <p>No tasks</p>}
+      {/* Afficher un texte indiquant que la liste est vide */}
+      <h2>{list.length > 0 ? "Tâches à effectuer" : "No tasks"}</h2>
       <ul>
         {/* Vérification que la liste n'est pas vide */}
         {list.length > 0 &&
           // Si pas vide, boucler sur ma tableau représentant toutes mes tâches
           list.map((task) => (
-            <li key={task.id}>
-              <input
-                type="checkbox"
-                name={task.nameTask}
-                id={task.nameTask}
-                onChange={() => handleTaskDone(task.id)}
-              />
-              <span className={task.done ? "task-done" : ""}>
-                {task.nameTask}
-              </span>{" "}
-              <span onClick={() => handleDeleteTask(task.id)}>X</span>
-            </li>
+            <Task
+              key={task.id}
+              name={task.nameTask}
+              id={task.nameTask}
+              onChange={() => handleTaskDone(task.id)}
+              onClick={() => handleDeleteTask(task.id)}
+              done={task.done}
+            />
           ))}
       </ul>
       <div>
