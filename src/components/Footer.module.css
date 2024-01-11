@@ -1,13 +1,11 @@
 footer {
   padding: 1rem;
   background-color: #10002b;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
   text-align: center;
   font-size: 0.8rem;
   font-weight: 200;
   color: #fff;
+  margin-top: 3rem;
 }
 
 footer a {

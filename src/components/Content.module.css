@@ -18,6 +18,9 @@ button {
   border-radius: var(--border-radius);
   background-color: var(--primary-color);
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 .search-and-list {
