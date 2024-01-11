@@ -8,11 +8,29 @@ import {
 library.add(faEnvelope, faKey, faListAlt);
 import "./App.css";
 import Task from "./components/Task";
+import Input from "./components/Input";
 
 function App() {
   // STATES ----------------------------------------
   const [list, setList] = useState([]);
   const [task, setTask] = useState("");
+  const [search, setSearch] = useState("");
+
+  //Liste tâches et fonctionnalités de la searchbar ---
+  const listTasks = list.map((task) => {
+    if (task.nameTask.includes(search)) {
+      return (
+        <Task
+          key={task.id}
+          name={task.nameTask}
+          id={task.nameTask}
+          onChange={() => handleTaskDone(task.id)}
+          onClick={() => handleDeleteTask(task.id)}
+          done={task.done}
+        />
+      );
+    }
+  });
 
   // GESTIONNAIRES --------------------------------------
   //Gestion onclick ajouter une tâche ---------
@@ -60,39 +78,37 @@ function App() {
     return setList(newListUpdated);
   };
 
-  // console.log(list);
-
   // Render ----------------------------------------
   return (
     <main>
       {/* Afficher un texte indiquant que la liste est vide */}
-      <h2>{list.length > 0 ? "Tâches à effectuer" : "No tasks"}</h2>
-      <ul>
-        {/* Vérification que la liste n'est pas vide */}
-        {list.length > 0 &&
-          // Si pas vide, boucler sur ma tableau représentant toutes mes tâches
-          list.map((task) => (
-            <Task
-              key={task.id}
-              name={task.nameTask}
-              id={task.nameTask}
-              onChange={() => handleTaskDone(task.id)}
-              onClick={() => handleDeleteTask(task.id)}
-              done={task.done}
+      <section>
+        <h2>Tâches à effectuer</h2>
+        {list.length > 0 ? (
+          <div>
+            {/* La searchbar */}
+            <Input
+              type="search"
+              placeholder="Search a task"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
             />
-          ))}
-      </ul>
-      <div>
-        <input
-          type="text"
-          name="task"
-          id="task"
-          placeholder="New task"
-          value={task}
-          onChange={(event) => setTask(event.target.value)}
-        />
-        <button onClick={handleAddTask}>Add task</button>
-      </div>
+            {/* La liste des tâches */}
+            <ul>{listTasks}</ul>
+          </div>
+        ) : (
+          "Is empty"
+        )}
+        <div>
+          <Input
+            type="text"
+            placeholder="New task"
+            value={task}
+            onChange={(event) => setTask(event.target.value)}
+          />
+          <button onClick={handleAddTask}>Add task</button>
+        </div>
+      </section>
     </main>
   );
 }
