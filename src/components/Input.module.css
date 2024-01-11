@@ -30,3 +30,14 @@ input[type="search"]:focus::placeholder {
   color: #707070;
   font-weight: 100;
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="search"] {
+    width: 100%;
+    padding: 1.1rem 1rem;
+    font-size: 1.2rem;
+  }
+}

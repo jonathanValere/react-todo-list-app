@@ -59,11 +59,22 @@ button {
   stroke: red;
 }
 
+/* RESPONSIVE */
+
 @media (max-width: 768px) {
   section {
     width: 97%;
+    margin: 3rem 0;
   }
+
   .part-add {
     flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  button {
+    padding: 1.1rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
   }
 }

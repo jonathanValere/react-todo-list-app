@@ -54,4 +54,8 @@ input[type="checkbox"]:hover {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  li {
+    padding: 1.3rem 1.2rem;
+    font-size: 1.2rem;
+  }
 }
