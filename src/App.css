@@ -1,3 +1,36 @@
+/* Enlever le design par default du navigateur de la ckechbox */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+}
+
+:root {
+  font-family: "Kanit", sans-serif;
+  /* VARIABLES */
+  --primary-color: #5a189a;
+  --secondary-color: #dddddd;
+  --third-color: #e0aaff;
+  --border-radius: 4px;
+}
+
+::placeholder,
+input {
+  font-family: "Kanit", sans-serif;
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
 .task-done {
   text-decoration: line-through;
 }
@@ -15,7 +48,7 @@ input[type="checkbox"] {
 
 .dark {
   color: #fff;
-  background-color: black;
+  background-color: rgb(67, 67, 67);
 }
 
 .dark a {

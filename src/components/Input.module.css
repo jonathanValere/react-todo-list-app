@@ -1,0 +1,32 @@
+input[type="text"],
+input[type="search"] {
+  padding: 0.7rem 1rem;
+  border-radius: var(--border-radius);
+  border: none;
+  background-color: rgb(245, 245, 245);
+  width: 20rem;
+  outline: none;
+  font-weight: 300;
+  font-size: 1rem;
+  color: #10002b;
+}
+
+input[type="search"] {
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus {
+  background-color: #d8d2fc;
+}
+
+input[type="text"]:focus::placeholder,
+input[type="search"]:focus::placeholder {
+  color: #fff;
+  font-weight: 300;
+}
+
+::placeholder {
+  color: #707070;
+  font-weight: 100;
+}

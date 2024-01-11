@@ -1,0 +1,22 @@
+header {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  border-bottom: 0.5px solid var(--primary-color);
+}
+
+header p {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: bold;
+}
+
+header svg {
+  color: var(--primary-color);
+}
+
+.mode {
+  display: none;
+}

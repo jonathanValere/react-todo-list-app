@@ -2,6 +2,8 @@ import { useState } from "react";
 import Task from "./Task";
 import Input from "./Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./Content.module.css";
+import illuEmpty from "../assets/img/empty.svg";
 
 export default function Content() {
   // STATES ----------------------------------------
@@ -34,8 +36,13 @@ export default function Content() {
     if (task) {
       // Insertion de la tâche dans la nouvelle liste
       newList.push({ id: list.length + 1, nameTask: task, done: false });
+
+      // En cas de tâches déjà réalisées, les mettre en bas de liste
+      const listDone = newList.filter((task) => task.done === true);
+      const listToDo = newList.filter((task) => task.done === false).reverse();
+      const newListUpdated = [...listToDo, ...listDone];
       // Mise à jour le state (list)
-      setList(newList);
+      setList(newListUpdated);
       setTask("");
     }
   };
@@ -73,12 +80,12 @@ export default function Content() {
 
   // Render ----------------------------------------
   return (
-    <main>
+    <main className="container">
       {/* Afficher un texte indiquant que la liste est vide */}
       <section>
-        <h2>Tâches à effectuer</h2>
+        {/* <h2>Mes tâches</h2> */}
         {list.length > 0 ? (
-          <div>
+          <div className={styles["search-and-list"]}>
             {/* La searchbar */}
             <Input
               type="search"
@@ -87,12 +94,15 @@ export default function Content() {
               onChange={(event) => setSearch(event.target.value)}
             />
             {/* La liste des tâches */}
-            <ul>{listTasks}</ul>
+            <ul className={styles.tasks}>{listTasks}</ul>
           </div>
         ) : (
-          "Is empty..."
+          <div className={styles.empty}>
+            <img src={illuEmpty} alt="Illustrations" />
+            <p>... No tasks</p>
+          </div>
         )}
-        <div>
+        <div className={styles["part-add"]}>
           <Input
             type="text"
             placeholder="New task"
