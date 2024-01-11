@@ -4,31 +4,18 @@ import Input from "./Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Content.module.css";
 import illuEmpty from "../assets/img/empty.svg";
+import PutTask from "./PutTask";
 
 export default function Content() {
   // STATES ----------------------------------------
   const [list, setList] = useState([]);
   const [task, setTask] = useState("");
   const [search, setSearch] = useState("");
-
-  //Liste tâches et fonctionnalités de la searchbar ---
-  const listTasks = list.map((task) => {
-    if (task.nameTask.includes(search)) {
-      return (
-        <Task
-          key={task.id}
-          name={task.nameTask}
-          id={task.nameTask}
-          onChange={() => handleTaskDone(task.id)}
-          onClick={() => handleDeleteTask(task.id)}
-          done={task.done}
-        />
-      );
-    }
-  });
+  const [put, setPut] = useState(false);
 
   // GESTIONNAIRES --------------------------------------
-  //Gestion onclick ajouter une tâche ---------
+  // CRUD ----------
+  // Ajouter une tâche ---------
   const handleAddTask = () => {
     // Création d'une copie de la liste
     const newList = [...list];
@@ -46,6 +33,41 @@ export default function Content() {
       setTask("");
     }
   };
+
+  const handleGenericTask = (id, reqName) => {
+    // Supprimer la tâche-----------
+    if (reqName === "delete") {
+      // Création d'une copie de la liste
+      const newList = [...list];
+      // Retirer la tâche dont l'id est renseigné en argument
+      const newListUpdated = newList.filter((task) => task.id !== id);
+      // Mise à jour le state (list) avec la copie
+      return setList(newListUpdated);
+    }
+    // Modifier une tâche -----
+    if (reqName === "put") {
+      const newList = [...list];
+      const getTask = newList.filter((task) => task.id === id);
+      return console.log("En cours d'implémentation");
+    }
+  };
+
+  //Liste tâches et fonctionnalités de la searchbar ---
+  const listTasks = list.map((task) => {
+    if (task.nameTask.includes(search)) {
+      return (
+        <Task
+          key={task.id}
+          keyTask={task.id}
+          name={task.nameTask}
+          id={task.nameTask}
+          onChange={() => handleTaskDone(task.id)}
+          onClick={handleGenericTask}
+          done={task.done}
+        />
+      );
+    }
+  });
 
   // Tâche réalisée ou non --------
   const handleTaskDone = (id) => {
@@ -65,16 +87,6 @@ export default function Content() {
     // Fusionner les tableaux en mettant insérant les tâches réalisées à la fin de la liste
     const newListUpdated = [...listToDo, ...listDone];
     // Mettre à jour le state (list) avec la copie ----
-    return setList(newListUpdated);
-  };
-
-  // Supprimer la tâche-------
-  const handleDeleteTask = (id) => {
-    // Création d'une copie de la liste
-    const newList = [...list];
-    // Retirer la tâche dont l'id est renseigné en argument
-    const newListUpdated = newList.filter((task) => task.id !== id);
-    // Mise à jour le state (list) avec la copie
     return setList(newListUpdated);
   };
 

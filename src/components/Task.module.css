@@ -46,3 +46,12 @@ input[type="checkbox"]:hover {
   background-color: #10002b;
   color: #fefefe;
 }
+
+.icon-task {
+  display: flex;
+  gap: 1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+}
