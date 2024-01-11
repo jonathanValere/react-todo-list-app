@@ -87,9 +87,4 @@ button {
   .search-and-list {
     margin-bottom: 0;
   }
-
-  ul {
-    height: 20rem;
-    overflow: scroll;
-  }
 }
