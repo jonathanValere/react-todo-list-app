@@ -9,14 +9,14 @@ export default function Task({ onClick, ...props }) {
           type="checkbox"
           name={props.name}
           id={props.name}
-          onChange={props.onChange}
           className={styles["custom-checkbox"]}
+          onClick={() => onClick("put", props.keyTask)}
         />
         <span className={props.done ? "task-done" : ""}>{props.name}</span>{" "}
       </div>
       <div className={styles["icon-task"]}>
         <span
-          onClick={() => onClick(props.keyTask, "delete")}
+          onClick={() => onClick("delete", props.keyTask)}
           className="click"
         >
           <FontAwesomeIcon icon="trash-can" />

@@ -20,7 +20,7 @@ li > div {
 }
 
 li svg:hover {
-  color: #10002b;
+  color: var(--fourth-color);
 }
 
 input[type="checkbox"] {
@@ -33,17 +33,17 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-color: #10002b;
+  background-color: var(--fourth-color);
   border-color: #fff;
 }
 
 input[type="checkbox"]:hover {
-  background-color: #10002b;
+  background-color: var(--fourth-color);
   border-color: #fff;
 }
 
 .task-done {
-  background-color: #10002b;
+  background-color: var(--fourth-color);
   color: #fefefe;
 }
 

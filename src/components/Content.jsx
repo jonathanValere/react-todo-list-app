@@ -4,91 +4,84 @@ import Input from "./Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Content.module.css";
 import illuEmpty from "../assets/img/empty.svg";
-import PutTask from "./PutTask";
+import Tasks from "./Tasks";
 
 export default function Content() {
   // STATES ----------------------------------------
   const [list, setList] = useState([]);
   const [task, setTask] = useState("");
   const [search, setSearch] = useState("");
-  const [put, setPut] = useState(false);
 
   // GESTIONNAIRES --------------------------------------
   // CRUD ----------
-  // Ajouter une tâche ---------
-  const handleAddTask = () => {
+  const handleGenericTask = (reqName, id) => {
     // Création d'une copie de la liste
     const newList = [...list];
-    // Le champs est rempli, on insère la tâche dans la liste
-    if (task) {
-      // Insertion de la tâche dans la nouvelle liste
-      newList.push({ id: list.length + 1, nameTask: task, done: false });
 
-      // En cas de tâches déjà réalisées, les mettre en bas de liste
-      const listDone = newList.filter((task) => task.done === true);
-      const listToDo = newList.filter((task) => task.done === false).reverse();
-      const newListUpdated = [...listToDo, ...listDone];
-      // Mise à jour le state (list)
-      setList(newListUpdated);
-      setTask("");
+    // Ajouter une tâche --------------
+    if (reqName === "create") {
+      // Le champs est rempli, on insère la tâche dans la liste
+      if (task) {
+        // Création d'un id unique
+        const newId = Date.now();
+        // Insertion de la tâche dans la nouvelle liste
+        newList.push({ id: newId, nameTask: task, done: false });
+        // Mise à jour des states
+        setList(newList);
+        return setTask("");
+      }
     }
-  };
 
-  const handleGenericTask = (id, reqName) => {
-    // Supprimer la tâche-----------
+    // Supprimer la tâche-----------------------------
     if (reqName === "delete") {
-      // Création d'une copie de la liste
-      const newList = [...list];
       // Retirer la tâche dont l'id est renseigné en argument
       const newListUpdated = newList.filter((task) => task.id !== id);
-      // Mise à jour le state (list) avec la copie
+      // Mise à jour du state
       return setList(newListUpdated);
     }
-    // Modifier une tâche -----
+    // ----------------------------------------------------
+
+    // Modifier le status de la tâche ------------------------
     if (reqName === "put") {
-      const newList = [...list];
-      const getTask = newList.filter((task) => task.id === id);
-      return console.log("En cours d'implémentation");
+      // Parcourir la nouvelle liste
+      newList.map((task) => {
+        // Mettre la tâche à true
+        if (task.id === id) {
+          task.done = !task.done;
+        }
+      });
+      // Mettre à jour le state (list) avec la copie ----
+      return setList(newList);
     }
   };
+  // ----------------------------------
 
-  //Liste tâches et fonctionnalités de la searchbar ---
-  const listTasks = list.map((task) => {
-    if (task.nameTask.includes(search)) {
-      return (
+  // AFFICHER les listes et la gestion de la serach bar -----
+
+  const filterDone = list.filter((task) => {
+    return task.done === true;
+  });
+
+  const filterToDo = list.filter((task) => {
+    return task.done !== true;
+  });
+
+  const displayList = (list) => {
+    return list
+      .filter((task) => task.nameTask.includes(search))
+      .map((task) => (
         <Task
           key={task.id}
           keyTask={task.id}
           name={task.nameTask}
           id={task.nameTask}
-          onChange={() => handleTaskDone(task.id)}
           onClick={handleGenericTask}
           done={task.done}
         />
-      );
-    }
-  });
-
-  // Tâche réalisée ou non --------
-  const handleTaskDone = (id) => {
-    // Création d'une copie de la liste
-    const newList = [...list];
-    // Parcourir la nouvelle liste
-    newList.map((task) => {
-      // Mettre la tâche à true
-      if (task.id === id) {
-        task.done = !task.done;
-      }
-    });
-    // ! Les tâches barrées devront être affichées en bas de la liste ---
-    // Séparation en 2 tableaux. Un pour les tâches réalisées et l'autre pour les tâches à faire
-    const listDone = newList.filter((task) => task.done === true);
-    const listToDo = newList.filter((task) => task.done === false);
-    // Fusionner les tableaux en mettant insérant les tâches réalisées à la fin de la liste
-    const newListUpdated = [...listToDo, ...listDone];
-    // Mettre à jour le state (list) avec la copie ----
-    return setList(newListUpdated);
+      ));
   };
+
+  // console.log(list);
 
   // Render ----------------------------------------
   return (
@@ -99,14 +92,21 @@ export default function Content() {
         {list.length > 0 ? (
           <div className={styles["search-and-list"]}>
             {/* La searchbar */}
-            <Input
-              type="search"
-              placeholder="Search a task"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            {/* La liste des tâches */}
-            <ul className={styles.tasks}>{listTasks}</ul>
+            <div className={styles.searchBar}>
+              <FontAwesomeIcon icon={"magnifying-glass"} />
+              <Input
+                type="search"
+                placeholder="Search a task"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+            </div>
+            <Tasks subtitle="Tasks to do" numberTasks={filterToDo.length}>
+              {displayList(filterToDo)}
+            </Tasks>
+            <Tasks subtitle="Tasks done" numberTasks={filterDone.length}>
+              {displayList(filterDone)}
+            </Tasks>
           </div>
         ) : (
           <div className={styles.empty}>
@@ -120,8 +120,12 @@ export default function Content() {
             placeholder="New task"
             value={task}
             onChange={(event) => setTask(event.target.value)}
+            onKeyDown={(event) =>
+              event.key === "Enter" && handleGenericTask("create")
+            }
           />
-          <button onClick={handleAddTask}>
+
+          <button onClick={() => handleGenericTask("create")}>
             <FontAwesomeIcon icon="plus" />
             Add task
           </button>

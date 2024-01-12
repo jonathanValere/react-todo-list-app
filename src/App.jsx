@@ -6,8 +6,16 @@ import {
   faPlus,
   faTrashCan,
   faPen,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faRectangleList, faCircleHalfStroke, faPlus, faTrashCan, faPen);
+library.add(
+  faRectangleList,
+  faCircleHalfStroke,
+  faPlus,
+  faTrashCan,
+  faPen,
+  faMagnifyingGlass
+);
 import "./App.css";
 import Header from "./components/Header";
 import Content from "./components/Content";
@@ -16,7 +24,6 @@ import Footer from "./components/Footer";
 function App() {
   // State du dark mode -----------
   const [mode, setMode] = useState(false);
-
   // Render --------------
   return (
     <div className={mode ? "dark" : ""}>
