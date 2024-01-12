@@ -90,5 +90,6 @@ button {
 
   .search-and-list {
     margin-bottom: 0;
+    width: 100%;
   }
 }

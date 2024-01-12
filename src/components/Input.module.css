@@ -37,7 +37,7 @@ input[type="search"]:focus::placeholder {
   input[type="text"],
   input[type="search"] {
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     font-size: 1.2rem;
   }
 }
