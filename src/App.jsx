@@ -7,6 +7,7 @@ import {
   faTrashCan,
   faPen,
   faMagnifyingGlass,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faRectangleList,
@@ -14,7 +15,8 @@ library.add(
   faPlus,
   faTrashCan,
   faPen,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faXmark
 );
 import "./App.css";
 import Header from "./components/Header";

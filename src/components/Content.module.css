@@ -35,7 +35,7 @@ button {
 }
 
 .searchBar svg {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--primary-color);
 }
 
@@ -44,7 +44,7 @@ button {
   flex-direction: column;
   /* align-items: center; */
   width: 28rem;
-  margin-bottom: 9.9rem;
+  margin-bottom: 7rem;
 }
 
 .part-add {
@@ -52,6 +52,8 @@ button {
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
+  border-top: 1px solid var(--primary-color);
+  padding-top: 1rem;
 }
 
 .empty {

@@ -1,0 +1,42 @@
+@keyframes slidein {
+  from {
+    top: 4rem;
+  }
+
+  to {
+    top: 4.3rem;
+  }
+}
+
+.modal {
+  background-color: rgb(82, 187, 91);
+  padding: 1.2rem 1rem;
+  border-radius: var(--border-radius);
+  color: #fff;
+  font-weight: 200;
+  position: absolute;
+  width: 30rem;
+  top: 4.3rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  animation-duration: 1s;
+  animation-name: slidein;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal svg {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.taskDeleted {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    width: 90%;
+  }
+}

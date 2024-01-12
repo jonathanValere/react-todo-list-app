@@ -5,14 +5,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Content.module.css";
 import illuEmpty from "../assets/img/empty.svg";
 import Tasks from "./Tasks";
+import Modal from "./Modal";
 
 export default function Content() {
   // STATES ----------------------------------------
   const [list, setList] = useState([]);
   const [task, setTask] = useState("");
   const [search, setSearch] = useState("");
+  const [modal, setModal] = useState({ isActive: false, taskName: "" });
 
   // GESTIONNAIRES --------------------------------------
+  // Modal
+  const handleCloseModal = () => {
+    const newModal = { ...modal };
+    newModal.isActive = false;
+    newModal.taskName = "";
+    return setModal(newModal);
+  };
+
   // CRUD ----------
   const handleGenericTask = (reqName, id) => {
     // Création d'une copie de la liste
@@ -36,7 +46,14 @@ export default function Content() {
     if (reqName === "delete") {
       // Retirer la tâche dont l'id est renseigné en argument
       const newListUpdated = newList.filter((task) => task.id !== id);
+      // MODAL Récupérer la tâche supprimée ---
+      const getTaskDeleted = newList.filter((task) => task.id === id);
+      const newModal = { ...modal };
+      newModal.isActive = true;
+      newModal.taskName = getTaskDeleted[0].nameTask;
+      setModal(newModal);
       // Mise à jour du state
+      // -------------
       return setList(newListUpdated);
     }
     // ----------------------------------------------------
@@ -81,14 +98,16 @@ export default function Content() {
       ));
   };
 
-  // console.log(list);
+  // console.log(modal);
 
   // Render ----------------------------------------
   return (
     <main className="container">
       {/* Afficher un texte indiquant que la liste est vide */}
       <section>
-        {/* <h2>Mes tâches</h2> */}
+        {modal.isActive && (
+          <Modal value={modal.taskName} onClick={handleCloseModal} />
+        )}
         {list.length > 0 ? (
           <div className={styles["search-and-list"]}>
             {/* La searchbar */}
